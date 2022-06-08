@@ -1,0 +1,58 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <h2>{{ request.user.email }}</h2>
+
+    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
+    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
+    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
+    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
+    <hr>
+
+    <div id="emails-view">
+    </div>
+
+    <div id="message-view">
+        <form id="archive_form">
+            <input type="hidden" id="archive_id" value="">
+            <input id="archive_button" type="submit" value="">
+        </form>
+        <div id="message_sender">
+        </div>
+        <div id="message_recipients">
+        </div>
+        <div id="message_subject">
+        </div>
+        <div id="message_timestamp">
+        </div>
+        <form id="reply_form" onsubmit="return false">
+            <input type="hidden" id="reply_id" value="">
+            <input type="submit" value="Reply">
+        </form>
+        <div id="message_body">
+        </div>
+    </div>
+
+    <div id="compose-view">
+        <h3>New Email</h3>
+        <form id="compose-form">
+            <div class="form-group">
+                From: <input disabled id="us" class="form-control" value="{{ request.user.email }}">
+            </div>
+            <div class="form-group">
+                To: <input id="compose-recipients" class="form-control">
+            </div>
+            <div class="form-group">
+                <input class="form-control" id="compose-subject" placeholder="Subject">
+            </div>
+            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+{% endblock %}
